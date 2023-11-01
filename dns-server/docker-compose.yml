@@ -1,0 +1,28 @@
+version: '3'
+services:
+  dns:
+    restart: always
+    image: strm/dnsmasq
+    volumes:
+      - ./dns/dnsmasq.conf:/etc/dnsmasq.conf
+    ports:
+      - "53:53/udp"
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - mynetwork
+  
+  web-server-1:
+    image: nginx:latest
+    container_name: web-server-1
+    volumes:
+      - ./web-server-1:/usr/share/nginx/html
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.33.0.0/16

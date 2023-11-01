@@ -1,0 +1,1 @@
+This lab not work because I can't access container direcly with Ip address
